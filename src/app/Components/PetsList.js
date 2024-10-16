@@ -6,11 +6,15 @@ import PetItem from "./PetItem";
 function PetsList({ pets }) {
   const [query, setQuery] = useState("");
   const [type, setType] = useState("");
+  const [adopt, setAdopt] = useState([]);
 
+  console.log(adopt);
   const petList = pets.map((pet) => {
-    if (pet.type.includes(type)) {
+    if (pet.type.includes(type) && !adopt.includes(pet.name)) {
       if (pet.name.toLowerCase().includes(query.toLowerCase())) {
-        return <PetItem pet={pet} key={pet.id} />;
+        return (
+          <PetItem pet={pet} key={pet.id} adopt={adopt} setAdopt={setAdopt} />
+        );
       }
     }
   });
@@ -21,6 +25,9 @@ function PetsList({ pets }) {
   function handleListchange(event) {
     setType(event.target.value);
   }
+
+  
+
 
   return (
     <>

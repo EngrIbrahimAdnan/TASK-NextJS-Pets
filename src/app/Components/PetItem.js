@@ -7,7 +7,7 @@ import Image from "next/image";
 const btnStyle =
   "m-4 p-2 bg-palette-primary text-white rounded-sm font-primary font-semibold  hover:bg-palette-dark";
 
-function PetItem({ pet }) {
+function PetItem({ pet, adopt, setAdopt }) {
   const [image, setImage] = useState(pet.image);
 
   let isImagechanged = false;
@@ -18,6 +18,15 @@ function PetItem({ pet }) {
     } else {
       isImagechanged = false;
       setImage(pet.image2);
+    }
+  }
+
+  function adoptHandler(event) {
+    const userResponse = confirm("Do you want to proceed?");
+
+    if (userResponse) {
+      setAdopt([...adopt, pet.name]);
+      console.log(adopt);
     }
   }
 
@@ -44,7 +53,11 @@ function PetItem({ pet }) {
           <button type="button" className={btnStyle}>
             Pet
           </button>
-          <button type="button" className={btnStyle}>
+          <button
+            type="button"
+            className={btnStyle}
+            onClick={(event) => adoptHandler(event)}
+          >
             Adopt
           </button>
         </div>
