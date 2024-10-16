@@ -1,8 +1,27 @@
+"use client";
+import { useState } from "react";
+
 import pets from "../data/pets";
 import PetItem from "./PetItem";
 
 function PetsList() {
-  const petList = pets.map((pet) => <PetItem pet={pet} key={pet.id} />);
+  const [query, setQuery] = useState("");
+  const [type, setType] = useState("");
+
+  const petList = pets.map((pet) => {
+    if (pet.type.includes(type)) {
+      if (pet.name.toLowerCase().includes(query.toLowerCase())) {
+        return <PetItem pet={pet} key={pet.id} />;
+      }
+    }
+  });
+  function handleSearchChange(event) {
+    setQuery(event.target.value);
+  }
+
+  function handleListchange(event) {
+    setType(event.target.value);
+  }
 
   return (
     <>
@@ -12,6 +31,7 @@ function PetsList() {
             <input
               type="search"
               placeholder="search"
+              onChange={(event) => handleSearchChange(event)}
               className="text-gray-900 form-input border border-gray-300 w-full rounded-sm focus:border-palette-light focus:ring-palette-light"
             />
           </div>
@@ -19,6 +39,7 @@ function PetsList() {
             <select
               defaultValue={""}
               className="form-select border border-gray-300 rounded-sm w-full text-gray-900 focus:border-palette-light focus:ring-palette-light"
+              onChange={(event) => handleListchange(event)}
             >
               <option value="">All</option>
               <option value="Cat">Cat</option>
@@ -28,7 +49,9 @@ function PetsList() {
           </div>
         </div>
       </div>
-      <div className="py-12 max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">{petList}</div>
+      <div className="py-12 max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+        {petList}
+      </div>
     </>
   );
 }
