@@ -1,10 +1,9 @@
 "use client";
 import { useState } from "react";
-
-import pets from "../data/pets";
+import React from "react";
 import PetItem from "./PetItem";
 
-function PetsList() {
+function PetsList({ pets }) {
   const [query, setQuery] = useState("");
   const [type, setType] = useState("");
 
